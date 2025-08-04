@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="makeall" name="Framework">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+	<property name="KINTAI_HOME" value="./../Kintai/" />
+
+    <path id="Framework.classpath">
+        <pathelement location="./lib/servlet-api.jar"/>
+        <pathelement location="./lib/jsp-api.jar"/>
+        <pathelement location="./lib/log4j-1.2.17.jar"/>
+        <pathelement location="./lib/commons-codec-1.18.0.jar"/>
+        <pathelement location="./lib/commons-fileupload-1.3.3.jar"/>
+        <pathelement location="./lib/commons-io-2.19.0.jar"/>
+    </path>
+
+	<target name="makeall" depends="cleanall,build,makejar"/>
+
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac encoding="UTF-8" debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="Framework.classpath"/>
+        </javac>
+    </target>
+
+    <!-- jarファイルの作成 -->
+	<property name="jar.home" value="." />
+	<property name="jar.name" value="TJSJavaFramework"/>
+	<property name="jar.temp" value="temp" />
+	<property name="jar.jp" value="jp/co/tjs_net/java/framework" />
+	<property name="jar.org" value="org/json/simple" />
+
+	<target name="makejar" depends="cleanjar,make,install"/>
+
+	<target name="cleanjar">
+		<delete file="${jar.home}/${jar.name}.jar"/>
+		<delete dir="${jar.temp}"/>
+	</target>
+
+	<target name="make">
+		<mkdir dir="${jar.temp}" />
+		<mkdir dir="${jar.temp}/${jar.jp}" />
+		<mkdir dir="${jar.temp}/${jar.jp}/base" />
+		<mkdir dir="${jar.temp}/${jar.jp}/common" />
+		<mkdir dir="${jar.temp}/${jar.jp}/core" />
+		<mkdir dir="${jar.temp}/${jar.jp}/database" />
+		<mkdir dir="${jar.temp}/${jar.jp}/information" />
+		<mkdir dir="${jar.temp}/${jar.jp}/message" />
+		<mkdir dir="${jar.temp}/${jar.jp}/startup" />
+		<mkdir dir="${jar.temp}/${jar.jp}/validate" />
+		<mkdir dir="${jar.temp}/${jar.org}" />
+		<mkdir dir="${jar.temp}/${jar.org}/parser" />
+		<mkdir dir="${jar.temp}/message" />
+		<mkdir dir="${jar.temp}/script" />
+
+		<copy todir="${jar.temp}/${jar.jp}">
+			<fileset dir="bin/${jar.jp}" includes="*.class" />
+		</copy>
+		<copy todir="${jar.temp}/${jar.jp}/base">
+			<fileset dir="bin/${jar.jp}/base" includes="*.class" />
+		</copy>
+		<copy todir="${jar.temp}/${jar.jp}/common">
+			<fileset dir="bin/${jar.jp}/common" includes="*.class" />
+		</copy>
+		<copy todir="${jar.temp}/${jar.jp}/core">
+			<fileset dir="bin/${jar.jp}/core" includes="*.class" />
+		</copy>
+		<copy todir="${jar.temp}/${jar.jp}/database">
+			<fileset dir="bin/${jar.jp}/database" includes="*.class" />
+		</copy>
+		<copy todir="${jar.temp}/${jar.jp}/information">
+			<fileset dir="bin/${jar.jp}/information" includes="*.class" />
+		</copy>
+		<copy todir="${jar.temp}/${jar.jp}/message">
+			<fileset dir="bin/${jar.jp}/message" includes="*.class" />
+		</copy>
+		<copy todir="${jar.temp}/${jar.jp}/startup">
+			<fileset dir="bin/${jar.jp}/startup" includes="*.class" />
+		</copy>
+		<copy todir="${jar.temp}/${jar.jp}/validate">
+			<fileset dir="bin/${jar.jp}/validate" includes="*.class" />
+		</copy>
+
+		<copy todir="${jar.temp}/${jar.org}">
+			<fileset dir="bin/${jar.org}" includes="*.class" />
+		</copy>
+		<copy todir="${jar.temp}/${jar.org}/parser">
+			<fileset dir="bin/${jar.org}/parser" includes="*.class" />
+		</copy>
+
+		<copy todir="${jar.temp}/message">
+			<fileset dir="message" includes="*.xml" />
+		</copy>
+
+		<copy todir="${jar.temp}/script">
+			<fileset dir="script" includes="*.js" />
+		</copy>
+
+		<copy file=".classpath" todir="${jar.temp}"/>
+
+		<jar jarfile="${jar.name}.jar" basedir="${jar.temp}"></jar>
+	</target>
+
+	<target name="install">
+		<copy file="${jar.home}/${jar.name}.jar" tofile="${KINTAI_HOME}/WEB-INF/lib/${jar.name}.jar"/>
+		<delete file="${jar.home}/${jar.name}.jar" />
+		<delete dir="${jar.temp}" />
+	</target>
+</project>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages>
+	<message id="_SYS_ERROR_001">致命的なエラーが発生しました</message>
+	<message id="_SYS_ERROR_002">不正アクセスの可能性があります</message>
+	<message id="_SYS_ERROR_003">モジュールクラス!#CLASSNAME#!の生成に失敗しました</message>
+	<message id="_SYS_ERROR_004">認証チェックで致命的なエラーが発生しました</message>
+	<message id="_SYS_ERROR_005">フレームワークコアクラスの動的生成に失敗しました</message>
+	<message id="_SYS_ERROR_006">コントローラーに処理定義が見つかりません</message>
+	<message id="_SYS_ERROR_007">必要なパラメータが見つかりません</message>
+</messages>
