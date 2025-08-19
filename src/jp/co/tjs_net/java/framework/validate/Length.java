@@ -34,9 +34,11 @@ public class Length extends ValidateBase {
 	protected boolean checkLength(String value, String type, int length, String operator) throws Exception {
 		int bytelength = 0;
 		if (type.toLowerCase().equals("half")) {
-			bytelength = value.getBytes("UTF-8").length;
+//			bytelength = value.getBytes("UTF-8").length;
+			bytelength = value.getBytes("SHIFT-JIS").length;
 		} else if (type.toLowerCase().equals("full")) {
-			bytelength = value.getBytes("UTF-8").length;
+//			bytelength = value.getBytes("UTF-8").length;
+			bytelength = value.getBytes("SHIFT-JIS").length;
 		}
 		if (operator.equals("<")) {
 			if (bytelength < length) {
