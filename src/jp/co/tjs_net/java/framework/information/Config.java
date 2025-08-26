@@ -54,6 +54,8 @@ public class Config {
 	
 	private ArrayList<String> systemMessageClasses;			// システムメッセージ定義
 	private HashMap<String, String> systemMessages;			// システムメッセージ格納領域
+	private String templateFilePath;						// 帳票テンプレートパス
+	private HashMap<String, String> templateFileNames;		// 帳票テンプレートファイル名
 	
 	// コンストラクタ
 	public Config(){
@@ -61,6 +63,7 @@ public class Config {
 		this.databases								= new HashMap<>();
 		this.messages								= new HashMap<>();
 		this.systemMessages							= new HashMap<>();
+		this.templateFileNames						= new HashMap<>();
 	}
 	
 	// Getter
@@ -92,7 +95,10 @@ public class Config {
 	public boolean isMessageUseJavaScript()						{ return this.messageUseJavaScript; }
 	public ArrayList<String> getMessageClasses()				{ return this.messageClasses; }
 	public ArrayList<String> getSystemMessageClasses()			{ return this.systemMessageClasses; }
-
+	
+	public String getTemplateFilePath()							{ return this.templateFilePath; }
+	public HashMap<String, String> getTemplateFileNames()		{ return this.templateFileNames; }
+	
 	/**
 	 * 
 	 */
@@ -220,6 +226,23 @@ public class Config {
 			this.systemMessageClasses.add(Define.FRAMEWORK_PACKAGE + ".message" + ".readFrameworkMessage");
 			for (int count = 0 ; count < systemMessagesNode.count("messageClass") ; count++){
 				this.systemMessageClasses.add(systemMessagesNode.n("messageClass", count).getTextContent());
+			}
+			
+			// 帳票テンプレートパス
+			RecursiveNode templateFilePathNode	= rootNode.n("templateFilePath");
+			this.templateFilePath				= (templateFilePathNode.n("path") == null ? "" : Common.replaceConfig(templateFilePathNode.n("path").getTextContent(), "!#", "#!", values));
+			
+			// 帳票テンプレート名
+			RecursiveNode templateFileNamesNode	= rootNode.n("templateFileNames");
+			for (int count = 0 ; count < templateFileNamesNode.count("fileName"); count++){
+				RecursiveNode fileNameNode		= templateFileNamesNode.n("fileName", count);
+				String id						= fileNameNode.n("id")==null	? null : Common.replaceConfig(fileNameNode.n("id").getTextContent(), "!#", "#!", values);
+				String name						= fileNameNode.n("name")==null	? null : Common.replaceConfig(fileNameNode.n("name").getTextContent(), "!#", "#!", values);
+				
+				if (id					== null){ continue; }  if (id.equals					("")){ continue; }
+				if (name				== null){ continue; }  if (name.equals					("")){ continue; }
+				
+				this.templateFileNames.put(id, name);
 			}
 			
 		} catch (Exception exp){

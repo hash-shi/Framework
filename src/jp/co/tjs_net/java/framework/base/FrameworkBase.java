@@ -124,4 +124,13 @@ public abstract class FrameworkBase {
 	public HashMap<String,Object> getContents(){
 		return this.contents;
 	}
+	
+	/**
+	 * @param id
+	 * @param args
+	 * @return
+	 */
+	protected String getTemplateFile(String id, HttpServletRequest req) throws Exception {
+		return this.info.getTemplateFile(id, req);
+	}
 }

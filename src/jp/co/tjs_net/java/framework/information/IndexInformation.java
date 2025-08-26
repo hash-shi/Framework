@@ -426,4 +426,28 @@ public class IndexInformation {
 		public String getErrorMessage() { return errorMessage; }		
 		public String getAfterScript() { return afterScript; }
 	}
+	
+	/**
+	 * 帳票テンプレート取得処理
+	 * @return
+	 */
+	public String getTemplateFile(String id, HttpServletRequest req) throws Exception {
+		String templateFile							= null;
+		String templateFilePath						= null;
+		String templateFileName						= null;
+		HashMap<String, String> templateFileNames	= null;
+		
+		templateFilePath					= this.config.getTemplateFilePath();
+		if (templateFilePath == null || "".equals(templateFilePath)) { return ""; }
+		
+		templateFileNames					= this.config.getTemplateFileNames();
+		if (templateFileNames == null || templateFileNames.size() == 0) { return ""; }
+		
+		templateFileName					= templateFileNames.get(id);
+		if (templateFileName == null || "".equals(templateFileName)) { return ""; }
+
+		templateFile = req.getServletContext().getRealPath(templateFilePath + templateFileName);
+		
+		return templateFile;
+	}
 }
