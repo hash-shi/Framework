@@ -119,6 +119,7 @@ public class Validate {
 							break;
 						}
 					} catch (Exception exp){
+						break;
 					} finally {
 						// 基本的に外部コネクションの開放は信用しないので、ここで切断する
 						info.closeOtherConnections();

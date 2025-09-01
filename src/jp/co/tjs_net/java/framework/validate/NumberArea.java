@@ -3,6 +3,8 @@ package jp.co.tjs_net.java.framework.validate;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+
 import jp.co.tjs_net.java.framework.information.IndexInformation;
 
 public class NumberArea extends NumberLimit {
@@ -14,8 +16,8 @@ public class NumberArea extends NumberLimit {
 	@Override
 	public boolean doValidate(HttpServletRequest req, HttpServletResponse res, String value, IndexInformation info) throws Exception {
 
-		String from	= this.params.get("from").toString();
-		String to	= this.params.get("to").toString();
+		String from	= StringUtils.defaultString(this.params.get("from")).toString();
+		String to	= StringUtils.defaultString(this.params.get("to")).toString();
 
 		// カンマを除去するか否かのパラメータ取得
 		String isReplaceComma = this.params.get("isReplaceComma")==null?"":this.params.get("isReplaceComma").toString();

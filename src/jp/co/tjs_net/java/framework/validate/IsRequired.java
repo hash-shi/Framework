@@ -16,9 +16,7 @@ public class IsRequired extends ValidateBase {
 
 	@Override
 	public boolean doValidate(HttpServletRequest req, HttpServletResponse res, String value, IndexInformation info) {
-		
-		value = StringUtils.defaultString(value);
-		if (value.trim().equals("")){
+		if (StringUtils.defaultString(value).trim().equals("")){
 			return false;
 		} else {
 			return true;

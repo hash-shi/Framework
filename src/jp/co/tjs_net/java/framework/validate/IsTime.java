@@ -5,6 +5,8 @@ import java.util.Calendar;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+
 import jp.co.tjs_net.java.framework.base.ValidateBase;
 import jp.co.tjs_net.java.framework.information.IndexInformation;
 
@@ -16,7 +18,7 @@ public class IsTime extends ValidateBase {
 
 	@Override
 	public boolean doValidate(HttpServletRequest req, HttpServletResponse res, String value, IndexInformation info) throws Exception {
-		if (value.trim().equals("")){ return true; }
+		if (StringUtils.defaultString(value).trim().equals("")){ return true; }
 		Calendar cal = Calendar.getInstance();
 		cal.setLenient(false);
 		try {

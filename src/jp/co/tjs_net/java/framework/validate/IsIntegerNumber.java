@@ -3,6 +3,8 @@ package jp.co.tjs_net.java.framework.validate;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+
 import jp.co.tjs_net.java.framework.information.IndexInformation;
 
 public class IsIntegerNumber extends IsRegexpFormat {
@@ -13,7 +15,7 @@ public class IsIntegerNumber extends IsRegexpFormat {
 
 	@Override
 	public boolean doValidate(HttpServletRequest req, HttpServletResponse res, String value, IndexInformation info) throws Exception {
-		if (value.trim().equals("")){ return true; }
+		if (StringUtils.defaultString(value).trim().equals("")){ return true; }
 		try {
 			Double.parseDouble(value);
 			if (checkRegexpFormat(value, "^[0-9]*$")) {

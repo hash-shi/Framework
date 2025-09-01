@@ -23,19 +23,18 @@ public class IsRequiredIf extends ValidateBase {
 		String target = null;
 		if (this.params.get("targetvalue") != null) {
 			target = this.params.get("targetvalue").toString();
-			target	= req.getParameter(target).trim();
+			target	= StringUtils.defaultString(req.getParameter(target)).trim();
 		}
 		
 		// 条件となる値
 		String condition = null;
 		if (this.params.get("conditionvalue") != null) {
-			condition = this.params.get("conditionvalue").toString().trim();
+			condition = StringUtils.defaultString(this.params.get("conditionvalue")).trim();
 		}
 		
 		// 条件がない場合、通常の必須として扱う
 		if (target == null && condition == null) {
-			value = StringUtils.defaultString(value);
-			if (value.trim().equals("")){
+			if (StringUtils.defaultString(value).trim().equals("")){
 				return false;
 			} else {
 				return true;
@@ -45,8 +44,7 @@ public class IsRequiredIf extends ValidateBase {
 		// 条件が両方ある場合、target = conditionの時だけ必須
 		else if (target != null && condition != null) {
 			if (target.equals(condition)) {
-				value = StringUtils.defaultString(value);
-				if (value.trim().equals("")){
+				if (StringUtils.defaultString(value).trim().equals("")){
 					return false;
 				} else {
 					return true;
@@ -57,8 +55,7 @@ public class IsRequiredIf extends ValidateBase {
 		// 条件がtargetのみの場合、targetに値がある場合のみ必須
 		else if (target != null && condition == null) {
 			if (!target.equals("")) {
-				value = StringUtils.defaultString(value);
-				if (value.trim().equals("")){
+				if (StringUtils.defaultString(value).trim().equals("")){
 					return false;
 				} else {
 					return true;

@@ -133,4 +133,13 @@ public abstract class FrameworkBase {
 	protected String getTemplateFile(String id, HttpServletRequest req) throws Exception {
 		return this.info.getTemplateFile(id, req);
 	}
+	
+	/**
+	 * @param id
+	 * @param args
+	 * @return
+	 */
+	protected String getTemplateFileName(String id) throws Exception {
+		return this.info.getTemplateFileName(id);
+	}
 }

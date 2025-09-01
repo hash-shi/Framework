@@ -450,4 +450,22 @@ public class IndexInformation {
 		
 		return templateFile;
 	}
+	
+	/**
+	 * 帳票テンプレート取得処理
+	 * @return
+	 */
+	public String getTemplateFileName(String id) throws Exception {
+		
+		String templateFileName						= null;
+		HashMap<String, String> templateFileNames	= null;
+		
+		templateFileNames					= this.config.getTemplateFileNames();
+		if (templateFileNames == null || templateFileNames.size() == 0) { return ""; }
+		
+		templateFileName					= templateFileNames.get(id);
+		if (templateFileName == null || "".equals(templateFileName)) { return ""; }
+		
+		return templateFileName;
+	}
 }
