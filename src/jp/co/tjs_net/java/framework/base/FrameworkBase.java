@@ -139,6 +139,15 @@ public abstract class FrameworkBase {
 	 * @param args
 	 * @return
 	 */
+	protected String getTemplateFilePath(HttpServletRequest req) throws Exception {
+		return this.info.getTemplateFilePath(req);
+	}
+	
+	/**
+	 * @param id
+	 * @param args
+	 * @return
+	 */
 	protected String getTemplateFileName(String id) throws Exception {
 		return this.info.getTemplateFileName(id);
 	}

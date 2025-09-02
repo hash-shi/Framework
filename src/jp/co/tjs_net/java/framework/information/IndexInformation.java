@@ -428,7 +428,7 @@ public class IndexInformation {
 	}
 	
 	/**
-	 * 帳票テンプレート取得処理
+	 * 帳票テンプレート取得処理(フルパス)
 	 * @return
 	 */
 	public String getTemplateFile(String id, HttpServletRequest req) throws Exception {
@@ -452,7 +452,23 @@ public class IndexInformation {
 	}
 	
 	/**
-	 * 帳票テンプレート取得処理
+	 * 帳票テンプレート取得処理(共通パス)
+	 * @return
+	 */
+	public String getTemplateFilePath(HttpServletRequest req) throws Exception {
+		
+		String templateFilePath						= null;
+		
+		templateFilePath					= this.config.getTemplateFilePath();
+		if (templateFilePath == null || "".equals(templateFilePath)) { return ""; }
+		
+		templateFilePath = req.getServletContext().getRealPath(templateFilePath);
+		
+		return templateFilePath;
+	}
+	
+	/**
+	 * 帳票テンプレート取得処理(ファイル名のみ)
 	 * @return
 	 */
 	public String getTemplateFileName(String id) throws Exception {
